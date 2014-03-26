@@ -53,7 +53,7 @@ public class DeviceData extends EventDispatcher
 
             else {
                 _deviceName = "";
-                _osVersion = "";
+                _osVersion = os;
                 dispatchEvent(new Event(DEVICE_DATA_READY));
             }
 
