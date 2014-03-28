@@ -36,6 +36,7 @@ public class RaygunAs extends EventDispatcher
 
     public function RaygunAs(mainSprite:Sprite = null, apiKey:String = null, appVersion:String = null)
     {
+		trace("init");
         _mainSprite = mainSprite;
         _apiKey = apiKey;
         _appVersion = appVersion;
