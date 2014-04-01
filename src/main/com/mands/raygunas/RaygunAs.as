@@ -34,7 +34,6 @@ package com.mands.raygunas
 		
 		public function RaygunAs(mainSprite:Sprite = null, apiKey:String = null, appVersion:String = null)
 		{
-			trace("init");
 			_mainSprite = mainSprite;
 			_apiKey = apiKey;
 			_appVersion = appVersion;
@@ -58,6 +57,7 @@ package com.mands.raygunas
 		
 		private function uncaughtErrorHandler( event:UncaughtErrorEvent ):void
 		{
+			trace("RaygunAS - report zapped successfully!");
 			event.stopImmediatePropagation();
 			performRequest(_appVersion, event.error, _mainSprite.stage, _deviceData.deviceName, _deviceData.osVersion);
 		}
