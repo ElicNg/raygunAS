@@ -7,6 +7,7 @@ package com.mands.raygunas
 	import com.mands.raygunas.raygunrequest.RaygunRequest;
 	import com.mands.raygunas.utils.Constants;
 	
+	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -31,10 +32,13 @@ package com.mands.raygunas
 		private var _apiKey:String;
 		private var _appVersion:String;
 		private var _deviceData:DeviceData;
+		private var _loaderInfo:LoaderInfo;
+		private var _stage:Stage;
 		
-		public function RaygunAs(mainSprite:Sprite = null, apiKey:String = null, appVersion:String = null)
+		public function RaygunAs(loaderInfo:LoaderInfo, stage:Stage, apiKey:String = null, appVersion:String = null)
 		{
-			_mainSprite = mainSprite;
+			_stage = stage;
+			_loaderInfo = loaderInfo;
 			_apiKey = apiKey;
 			_appVersion = appVersion;
 		}
@@ -48,18 +52,19 @@ package com.mands.raygunas
 		
 		private function onDeviceDataReady( event:Event ):void
 		{
-			if(_mainSprite != null)
+			if(_loaderInfo != null)
 			{
-				_mainSprite.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, uncaughtErrorHandler);
+				_loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, uncaughtErrorHandler);
 			}
 			dispatchEvent(new Event(READY_TO_ZAP));
+			trace("RaygunAS - ready to zap!");
 		}
 		
-		private function uncaughtErrorHandler( event:UncaughtErrorEvent ):void
+		private function uncaughtErrorHandler(event:UncaughtErrorEvent ):void
 		{
 			trace("RaygunAS - report zapped successfully!");
 			event.stopImmediatePropagation();
-			performRequest(_appVersion, event.error, _mainSprite.stage, _deviceData.deviceName, _deviceData.osVersion);
+			performRequest(_appVersion, event.error, _stage, _deviceData.deviceName, _deviceData.osVersion);
 		}
 		
 		public function performRequest(version:String, error:Error, mainStage:Stage = null, deviceName:String = null, osVersion:String = null):void

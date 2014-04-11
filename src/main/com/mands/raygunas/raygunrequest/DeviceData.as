@@ -38,7 +38,7 @@ package com.mands.raygunas.raygunrequest
 				_deviceName = os.substring(deviceLineNumber);
 				_osVersion = os.substring(0, deviceLineNumber -1);
 				
-				dispatchEvent(new Event(DEVICE_DATA_READY ));
+			
 			}
 			else{
 				//check for Android
@@ -50,14 +50,13 @@ package com.mands.raygunas.raygunrequest
 					deviceInfo.setDebug(false);
 					deviceInfo.parse();
 				}
-					
 				else {
 					_deviceName = "";
 					_osVersion = os;
-					dispatchEvent(new Event(DEVICE_DATA_READY));
 				}
 				
 			}
+			dispatchEvent(new Event(DEVICE_DATA_READY ));
 		}
 		
 		private function handleDevicePropertiesParsed( event:NativeDeviceInfoEvent ):void
